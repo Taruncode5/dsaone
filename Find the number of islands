@@ -1,0 +1,38 @@
+class Solution {
+    
+    public boolean isSafe(char[][] grid,int r, int c, boolean visited[][]){
+            int row = grid.length;
+            int col = grid[0].length;
+            return (r>=0) && (r<row) && (c>=0) && (c<col) && (grid[r][c]=='1' && !visited[r][c]);
+    }
+    
+    public void DFS(char[][] grid, int rows, int cols, boolean visited[][]){
+            int[] rowd = {1,1,0,-1,-1,-1,0,1};
+            int[] cold = {0,1,1,1,0,-1,-1,-1};
+            visited[rows][cols] = true;
+            for(int i=0;i<8;i++){
+                if(isSafe(grid,rows+rowd[i],cols+cold[i],visited)){
+                    DFS(grid,rows+rowd[i],cols+cold[i],visited);
+                }
+            }
+    }
+    // Function to find the number of islands.
+    public int numIslands(char[][] grid) {
+        // Code here
+        
+        int row = grid.length;
+        int col = grid[0].length;
+        boolean[][] visited = new boolean[row][col];
+        
+        int count =0;
+        for(int i=0;i<row;i++){
+            for(int j=0;j<col;j++){
+                if(grid[i][j]=='1' && !visited[i][j]){
+                    DFS(grid,i,j,visited);
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+}
